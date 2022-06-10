@@ -3,7 +3,7 @@
 %global enable_nodeunit_tests 0
 Name:                nodejs-async
 Version:             1.5.2
-Release:             2
+Release:             3
 Summary:             Higher-order functions and common patterns for asynchronous code
 License:             MIT
 URL:                 https://github.com/caolan/async/
@@ -40,11 +40,7 @@ cp -pr package.json lib %{buildroot}%{nodejs_sitelib}/async
 %nodejs_symlink_deps --check
 %__nodejs -e "require('./')"
 %if 0%{?enable_mocha_tests}
-%if %{_arch}==riscv64
-%{nodejs_sitelib}/mocha/bin/mocha mocha_test -t 50000
-%else
 %{nodejs_sitelib}/mocha/bin/mocha mocha_test
-%endif
 %endif
 %if 0%{?enable_nodeunit_tests}
 %{nodejs_sitelib}/nodeunit/bin/nodeunit test/test-async.js
@@ -56,6 +52,9 @@ cp -pr package.json lib %{buildroot}%{nodejs_sitelib}/async
 %{nodejs_sitelib}/async
 
 %changelog
+* Thu Jun 9 2022 misaka00251 <misaka00251@misakanet.cn> - 1.5.2-3
+- Revert mocha_test check time changes
+
 * Sun Feb 27 2022 Yongqing Chen <chenyongqingdl@gmail.com> - 1.5.2-2
 - Increase mocha_test check time for riscv64 arch
 
